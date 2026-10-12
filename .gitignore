@@ -21,13 +21,10 @@ serviceAccount*.json
 node_modules
 dist
 dist-ssr
-*.local
-.env
-.env.local
-.env.*.local
-.env.development.local
-.env.test.local
-.env.production.local
+# Environment files tracked per user request
+!.env
+!.env.local
+!.env.example
 
 # Editor directories and files
 .vscode/*
