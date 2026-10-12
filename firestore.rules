@@ -1,0 +1,510 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Common security helpers
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return isAuthenticated() && request.auth.uid == uid;
+    }
+
+    function getUserDoc() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    function hasRole(roleName) {
+      return isAuthenticated() &&
+        exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+        getUserDoc().get('role', '') == roleName &&
+        getUserDoc().get('isActive', false) == true;
+    }
+
+    function isAdmin() {
+      return hasRole('admin');
+    }
+
+    function isManager() {
+      return hasRole('manager');
+    }
+
+    function isProductionEmployee() {
+      return hasRole('production_employee');
+    }
+
+    function isPurchaseEmployee() {
+      return hasRole('purchase_employee');
+    }
+
+    function isSalesEmployee() {
+      return hasRole('sales_employee');
+    }
+
+    // 1. Users collection
+    match /users/{uid} {
+      allow read: if isOwner(uid) || isAdmin();
+      allow create: if isOwner(uid) && request.resource.data.uid == uid;
+      allow update: if (
+        isOwner(uid) &&
+        request.resource.data.uid == uid &&
+        request.resource.data.role == resource.data.role &&
+        request.resource.data.isActive == resource.data.isActive
+      ) || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // 2. Counters collection (Used for atomic materialCode, productCode, productionCode, leadCode, customerCode, requirementCode, quotationCode generation)
+    match /counters/{counterId} {
+      allow read, write: if isAdmin() || isManager() || isPurchaseEmployee() || isProductionEmployee() || isSalesEmployee();
+    }
+
+    // 3. Raw Materials collection: rawMaterials/{rawMaterialId}
+    match /rawMaterials/{rawMaterialId} {
+      // Read access allowed for all internal employees with inventory access
+      allow read: if isAdmin() || isManager() || isPurchaseEmployee() || isProductionEmployee();
+
+      // Master record creation allowed for Admin and Purchase Employees
+      allow create: if (isAdmin() || isPurchaseEmployee()) &&
+        request.resource.data.name is string &&
+        request.resource.data.materialCode is string &&
+        request.resource.data.unit is string &&
+        request.resource.data.currentStock is number &&
+        request.resource.data.currentStock >= 0 &&
+        request.resource.data.minimumStock is number &&
+        request.resource.data.minimumStock >= 0;
+
+      // Master data updates with field-level role protections:
+      allow update: if
+        // Stock can never be set to negative by anyone
+        request.resource.data.currentStock >= 0 &&
+        (
+          // Admin has full update capability
+          isAdmin() ||
+
+          // Manager: can perform stock adjustments and update active status; materialCode & unit are immutable
+          (isManager() &&
+            request.resource.data.materialCode == resource.data.materialCode &&
+            request.resource.data.unit == resource.data.unit
+          ) ||
+
+          // Purchase Employee: can update master fields (without changing stock) OR increase stock on purchase
+          (isPurchaseEmployee() &&
+            request.resource.data.materialCode == resource.data.materialCode &&
+            request.resource.data.unit == resource.data.unit &&
+            (
+              request.resource.data.currentStock == resource.data.currentStock ||
+              request.resource.data.currentStock > resource.data.currentStock
+            )
+          ) ||
+
+          // Production Employee: can ONLY deduct stock for usage (cannot increase stock or alter master data)
+          (isProductionEmployee() &&
+            request.resource.data.currentStock < resource.data.currentStock &&
+            request.resource.data.materialCode == resource.data.materialCode &&
+            request.resource.data.name == resource.data.name &&
+            request.resource.data.unit == resource.data.unit &&
+            request.resource.data.category == resource.data.category &&
+            request.resource.data.minimumStock == resource.data.minimumStock &&
+            request.resource.data.isActive == resource.data.isActive
+          )
+        );
+
+      // Deletion is strictly prohibited in normal operations; only Admin can delete
+      allow delete: if isAdmin();
+    }
+
+    // 4. Stock Transactions collection: stockTransactions/{transactionId}
+    match /stockTransactions/{transactionId} {
+      // Read audit trail allowed for authorized staff
+      allow read: if isAdmin() || isManager() || isPurchaseEmployee() || isProductionEmployee();
+
+      // Stock transaction creation:
+      // - INITIAL: Admin, Purchase Employee
+      // - PURCHASE: Admin, Purchase Employee
+      // - USAGE: Admin, Manager, Production Employee
+      // - ADJUSTMENT_IN / ADJUSTMENT_OUT: Admin, Manager strictly
+      allow create: if isAuthenticated() &&
+        request.resource.data.quantity is number &&
+        request.resource.data.quantity > 0 &&
+        (
+          isAdmin() ||
+          (isManager() && (request.resource.data.type in ['USAGE', 'ADJUSTMENT_IN', 'ADJUSTMENT_OUT'])) ||
+          (isPurchaseEmployee() && (request.resource.data.type in ['INITIAL', 'PURCHASE'])) ||
+          (isProductionEmployee() && request.resource.data.type == 'USAGE')
+        );
+
+      // Transactions are IMMUTABLE audit records: never update or delete
+      allow update, delete: if false;
+    }
+
+    // 5. Products collection: products/{productId}
+    match /products/{productId} {
+      allow read: if isAdmin() || isManager() || isProductionEmployee() || isSalesEmployee();
+
+      allow create: if (isAdmin() || isManager()) &&
+        request.resource.data.name is string &&
+        request.resource.data.name.size() > 0 &&
+        request.resource.data.productCode is string &&
+        request.resource.data.productCode.size() > 0 &&
+        request.resource.data.category is string &&
+        request.resource.data.unit is string &&
+        request.resource.data.unit in ['piece', 'set', 'kg', 'liter', 'meter'] &&
+        request.resource.data.isActive is bool;
+
+      allow update: if (isAdmin() || isManager()) &&
+        request.resource.data.productCode == resource.data.productCode &&
+        request.resource.data.unit in ['piece', 'set', 'kg', 'liter', 'meter'];
+
+      allow delete: if isAdmin();
+    }
+
+    // 6. BOM Items collection: bomItems/{bomItemId}
+    match /bomItems/{bomItemId} {
+      allow read: if isAdmin() || isManager() || isProductionEmployee() || isSalesEmployee();
+
+      allow create: if (isAdmin() || isManager()) &&
+        request.resource.data.productId is string &&
+        request.resource.data.rawMaterialId is string &&
+        request.resource.data.quantityPerProduct is number &&
+        request.resource.data.quantityPerProduct > 0 &&
+        request.resource.data.materialCodeSnapshot is string &&
+        request.resource.data.materialNameSnapshot is string &&
+        request.resource.data.unitSnapshot is string &&
+        request.resource.data.isActive is bool;
+
+      allow update: if (isAdmin() || isManager()) &&
+        request.resource.data.productId == resource.data.productId &&
+        request.resource.data.rawMaterialId == resource.data.rawMaterialId &&
+        request.resource.data.quantityPerProduct is number &&
+        request.resource.data.quantityPerProduct > 0;
+
+      allow delete: if isAdmin();
+    }
+
+    // 7. Productions collection: productions/{productionId}
+    match /productions/{productionId} {
+      allow read: if isAdmin() || isManager() || isProductionEmployee() || isSalesEmployee();
+
+      allow create: if (isAdmin() || isManager() || isProductionEmployee()) &&
+        request.resource.data.productionCode is string &&
+        request.resource.data.productionCode.size() > 0 &&
+        request.resource.data.productId is string &&
+        request.resource.data.quantityProduced is number &&
+        request.resource.data.quantityProduced > 0 &&
+        request.resource.data.productionArea in ['GROUND_FLOOR', 'SECOND_FLOOR'] &&
+        request.resource.data.status in ['COMPLETED', 'CANCELLED'];
+
+      allow update: if isAdmin() || isManager();
+
+      allow delete: if isAdmin();
+    }
+
+    // 8. Production Items collection (BOM Consumption Snapshot): productionItems/{itemId}
+    match /productionItems/{itemId} {
+      allow read: if isAdmin() || isManager() || isProductionEmployee() || isSalesEmployee();
+
+      allow create: if (isAdmin() || isManager() || isProductionEmployee()) &&
+        request.resource.data.productionId is string &&
+        request.resource.data.rawMaterialId is string &&
+        request.resource.data.quantityConsumed is number &&
+        request.resource.data.quantityConsumed > 0;
+
+      // Historical consumption snapshots are immutable
+      allow update, delete: if false;
+    }
+
+    // 9. Finished Product Stock collection: finishedProductStock/{productId}
+    match /finishedProductStock/{productId} {
+      allow read: if isAdmin() || isManager() || isProductionEmployee() || isSalesEmployee();
+
+      allow create, update: if (isAdmin() || isManager() || isProductionEmployee() || isSalesEmployee()) &&
+        request.resource.data.productId is string &&
+        request.resource.data.currentStock is number &&
+        request.resource.data.currentStock >= 0;
+
+      allow delete: if isAdmin();
+    }
+
+    // 10. Finished Product Transactions collection: finishedProductTransactions/{transactionId}
+    match /finishedProductTransactions/{transactionId} {
+      allow read: if isAdmin() || isManager() || isProductionEmployee() || isSalesEmployee();
+
+      allow create: if (isAdmin() || isManager() || isProductionEmployee() || isSalesEmployee()) &&
+        request.resource.data.productId is string &&
+        request.resource.data.quantity is number &&
+        request.resource.data.quantity > 0 &&
+        request.resource.data.type in ['PRODUCTION_IN', 'DISPATCH_OUT'];
+
+      // Finished goods stock ledger is immutable
+      allow update, delete: if false;
+    }
+
+    // 11. Suppliers collection: suppliers/{supplierId}
+    match /suppliers/{supplierId} {
+      allow read: if isAdmin() || isManager() || isPurchaseEmployee();
+
+      allow create: if (isAdmin() || isPurchaseEmployee()) &&
+        request.resource.data.name is string &&
+        request.resource.data.name.size() > 0 &&
+        request.resource.data.supplierCode is string &&
+        request.resource.data.supplierCode.size() > 0 &&
+        request.resource.data.isActive is bool;
+
+      allow update: if (isAdmin() || isPurchaseEmployee()) &&
+        request.resource.data.supplierCode == resource.data.supplierCode;
+
+      allow delete: if isAdmin();
+    }
+
+    // 12. Purchases collection: purchases/{purchaseId}
+    match /purchases/{purchaseId} {
+      allow read: if isAdmin() || isManager() || isPurchaseEmployee();
+
+      allow create: if (isAdmin() || isPurchaseEmployee()) &&
+        request.resource.data.purchaseCode is string &&
+        request.resource.data.purchaseCode.size() > 0 &&
+        request.resource.data.supplierId is string &&
+        request.resource.data.totalAmount is number &&
+        request.resource.data.totalAmount >= 0 &&
+        request.resource.data.status in ['RECEIVED', 'CANCELLED'];
+
+      allow update: if isAdmin() || isManager();
+
+      allow delete: if isAdmin();
+    }
+
+    // 13. Purchase Items collection: purchaseItems/{purchaseItemId}
+    match /purchaseItems/{purchaseItemId} {
+      allow read: if isAdmin() || isManager() || isPurchaseEmployee();
+
+      allow create: if (isAdmin() || isPurchaseEmployee()) &&
+        request.resource.data.purchaseId is string &&
+        request.resource.data.rawMaterialId is string &&
+        request.resource.data.quantity is number &&
+        request.resource.data.quantity > 0 &&
+        request.resource.data.unitPrice is number &&
+        request.resource.data.unitPrice >= 0;
+
+      // Purchase line items are immutable records
+      allow update, delete: if false;
+    }
+
+    // 14. Leads collection: leads/{leadId}
+    match /leads/{leadId} {
+      allow read: if isAdmin() || isManager() || isSalesEmployee();
+
+      allow create: if (isAdmin() || isSalesEmployee()) &&
+        request.resource.data.name is string &&
+        request.resource.data.name.size() > 0 &&
+        request.resource.data.leadCode is string &&
+        request.resource.data.leadCode.size() > 0 &&
+        request.resource.data.phone is string &&
+        request.resource.data.phone.size() > 0 &&
+        request.resource.data.status in ['NEW', 'CONTACTED', 'QUALIFIED', 'QUOTATION', 'NEGOTIATION', 'WON', 'LOST', 'CONVERTED'] &&
+        request.resource.data.priority in ['LOW', 'MEDIUM', 'HIGH', 'URGENT'];
+
+      allow update: if (isAdmin() || isSalesEmployee()) &&
+        request.resource.data.leadCode == resource.data.leadCode;
+
+      allow delete: if isAdmin();
+    }
+
+    // 15. Follow-ups collection: followUps/{followUpId}
+    match /followUps/{followUpId} {
+      allow read: if isAdmin() || isManager() || isSalesEmployee();
+
+      allow create: if (isAdmin() || isSalesEmployee()) &&
+        request.resource.data.leadId is string &&
+        request.resource.data.subject is string &&
+        request.resource.data.subject.size() > 0 &&
+        request.resource.data.type in ['CALL', 'MEETING', 'WHATSAPP', 'EMAIL', 'VISIT', 'OTHER'] &&
+        request.resource.data.status in ['PENDING', 'COMPLETED', 'CANCELLED'];
+
+      allow update: if (isAdmin() || isSalesEmployee()) &&
+        request.resource.data.leadId == resource.data.leadId;
+
+      allow delete: if isAdmin();
+    }
+
+    // 16. Customers collection: customers/{customerId}
+    match /customers/{customerId} {
+      allow read: if isAdmin() || isManager() || isSalesEmployee();
+
+      allow create: if (isAdmin() || isSalesEmployee()) &&
+        request.resource.data.name is string &&
+        request.resource.data.name.size() > 0 &&
+        request.resource.data.customerCode is string &&
+        request.resource.data.customerCode.size() > 0 &&
+        request.resource.data.phone is string &&
+        request.resource.data.phone.size() > 0 &&
+        request.resource.data.isActive is bool;
+
+      allow update: if (isAdmin() || isSalesEmployee()) &&
+        request.resource.data.customerCode == resource.data.customerCode;
+
+      allow delete: if isAdmin();
+    }
+
+    // 17. Customer Requirements collection: customerRequirements/{requirementId}
+    match /customerRequirements/{requirementId} {
+      allow read: if isAdmin() || isManager() || isSalesEmployee();
+
+      allow create: if (isAdmin() || isSalesEmployee()) &&
+        request.resource.data.customerId is string &&
+        request.resource.data.requirementCode is string &&
+        request.resource.data.requirementCode.size() > 0 &&
+        request.resource.data.title is string &&
+        request.resource.data.title.size() > 0 &&
+        request.resource.data.status in ['OPEN', 'IN_PROGRESS', 'QUOTED', 'WON', 'LOST', 'CANCELLED'] &&
+        request.resource.data.priority in ['LOW', 'MEDIUM', 'HIGH', 'URGENT'];
+
+      allow update: if (isAdmin() || isSalesEmployee()) &&
+        request.resource.data.requirementCode == resource.data.requirementCode &&
+        request.resource.data.customerId == resource.data.customerId;
+
+      allow delete: if isAdmin();
+    }
+
+    // 18. Quotations collection: quotations/{quotationId}
+    match /quotations/{quotationId} {
+      allow read: if isAdmin() || isManager() || isSalesEmployee();
+
+      allow create: if (isAdmin() || isSalesEmployee()) &&
+        request.resource.data.customerId is string &&
+        request.resource.data.quotationCode is string &&
+        request.resource.data.quotationCode.size() > 0 &&
+        request.resource.data.grandTotal is number &&
+        request.resource.data.grandTotal >= 0 &&
+        request.resource.data.status in ['DRAFT', 'SENT', 'ACCEPTED', 'REJECTED', 'EXPIRED', 'CANCELLED'];
+
+      allow update: if (isAdmin() || isSalesEmployee()) &&
+        request.resource.data.quotationCode == resource.data.quotationCode &&
+        request.resource.data.customerId == resource.data.customerId;
+
+      allow delete: if isAdmin();
+    }
+
+    // 19. Quotation Items collection: quotationItems/{quotationItemId}
+    match /quotationItems/{quotationItemId} {
+      allow read: if isAdmin() || isManager() || isSalesEmployee();
+
+      allow create: if (isAdmin() || isSalesEmployee()) &&
+        request.resource.data.quotationId is string &&
+        request.resource.data.productNameSnapshot is string &&
+        request.resource.data.quantity is number &&
+        request.resource.data.quantity > 0 &&
+        request.resource.data.unitPrice is number &&
+        request.resource.data.unitPrice >= 0;
+
+      // Line items are immutable
+      allow update, delete: if false;
+    }
+
+    // 20. Orders collection: orders/{orderId}
+    match /orders/{orderId} {
+      allow read: if isAdmin() || isManager() || isSalesEmployee() || isProductionEmployee();
+
+      allow create: if (isAdmin() || isManager() || isSalesEmployee()) &&
+        request.resource.data.orderCode is string &&
+        request.resource.data.orderCode.size() > 0 &&
+        request.resource.data.customerId is string &&
+        request.resource.data.grandTotal is number &&
+        request.resource.data.grandTotal >= 0 &&
+        request.resource.data.status in ['DRAFT', 'CONFIRMED', 'IN_PRODUCTION', 'READY_TO_DISPATCH', 'PARTIALLY_DISPATCHED', 'DISPATCHED', 'COMPLETED', 'CANCELLED'];
+
+      allow update: if (isAdmin() || isManager() || isSalesEmployee() || isProductionEmployee()) &&
+        request.resource.data.orderCode == resource.data.orderCode &&
+        request.resource.data.customerId == resource.data.customerId;
+
+      allow delete: if isAdmin();
+    }
+
+    // 21. Order Items collection: orderItems/{orderItemId}
+    match /orderItems/{orderItemId} {
+      allow read: if isAdmin() || isManager() || isSalesEmployee() || isProductionEmployee();
+
+      allow create: if (isAdmin() || isManager() || isSalesEmployee()) &&
+        request.resource.data.orderId is string &&
+        request.resource.data.productId is string &&
+        request.resource.data.orderedQuantity is number &&
+        request.resource.data.orderedQuantity > 0;
+
+      allow update: if (isAdmin() || isManager() || isSalesEmployee() || isProductionEmployee()) &&
+        request.resource.data.orderId == resource.data.orderId &&
+        request.resource.data.productId == resource.data.productId;
+
+      allow delete: if isAdmin();
+    }
+
+    // 22. Production Order Links collection: productionOrderLinks/{linkId}
+    match /productionOrderLinks/{linkId} {
+      allow read: if isAdmin() || isManager() || isProductionEmployee() || isSalesEmployee();
+
+      allow create: if (isAdmin() || isManager() || isProductionEmployee()) &&
+        request.resource.data.productionId is string &&
+        request.resource.data.orderId is string &&
+        request.resource.data.quantityAllocated is number &&
+        request.resource.data.quantityAllocated > 0;
+
+      // Link records are immutable audit logs
+      allow update, delete: if false;
+    }
+
+    // 23. Dispatches collection: dispatches/{dispatchId}
+    match /dispatches/{dispatchId} {
+      allow read: if isAdmin() || isManager() || isSalesEmployee() || isProductionEmployee();
+
+      allow create: if (isAdmin() || isManager() || isSalesEmployee() || isProductionEmployee()) &&
+        request.resource.data.dispatchCode is string &&
+        request.resource.data.dispatchCode.size() > 0 &&
+        request.resource.data.orderId is string &&
+        request.resource.data.totalQuantity is number &&
+        request.resource.data.totalQuantity > 0 &&
+        request.resource.data.status in ['DRAFT', 'READY', 'DISPATCHED', 'DELIVERED', 'CANCELLED'];
+
+      allow update: if (isAdmin() || isManager() || isSalesEmployee() || isProductionEmployee()) &&
+        request.resource.data.dispatchCode == resource.data.dispatchCode &&
+        request.resource.data.orderId == resource.data.orderId;
+
+      allow delete: if isAdmin();
+    }
+
+    // 24. Dispatch Items collection: dispatchItems/{dispatchItemId}
+    match /dispatchItems/{dispatchItemId} {
+      allow read: if isAdmin() || isManager() || isSalesEmployee() || isProductionEmployee();
+
+      allow create: if (isAdmin() || isManager() || isSalesEmployee() || isProductionEmployee()) &&
+        request.resource.data.dispatchId is string &&
+        request.resource.data.orderId is string &&
+        request.resource.data.quantity is number &&
+        request.resource.data.quantity > 0;
+
+      // Dispatch items are immutable
+      allow update, delete: if false;
+    }
+
+    // 25. Payments collection: payments/{paymentId}
+    match /payments/{paymentId} {
+      allow read: if isAdmin() || isManager() || isSalesEmployee();
+
+      allow create: if (isAdmin() || isManager() || isSalesEmployee()) &&
+        request.resource.data.paymentCode is string &&
+        request.resource.data.paymentCode.size() > 0 &&
+        request.resource.data.orderId is string &&
+        request.resource.data.amount is number &&
+        request.resource.data.amount > 0 &&
+        request.resource.data.status in ['RECEIVED', 'PENDING', 'CANCELLED'];
+
+      // Payment receipts are immutable audit records; only Admin can correct/delete
+      allow update, delete: if isAdmin();
+    }
+
+    // Default lockdown for unspecified paths
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
