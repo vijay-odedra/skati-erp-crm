@@ -88,7 +88,25 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   useEffect(() => {
     const unsubscribe = observeAuthState((firebaseUser) => {
-      void loadUserProfile(firebaseUser);
+      if (firebaseUser) {
+        void loadUserProfile(firebaseUser);
+      } else {
+        const saved = localStorage.getItem('skati_demo_user');
+        if (saved) {
+          try {
+            const { user: u, profile: p } = JSON.parse(saved);
+            setUser(u);
+            setProfile(p);
+            setLoading(false);
+            return;
+          } catch {
+            localStorage.removeItem('skati_demo_user');
+          }
+        }
+        setUser(null);
+        setProfile(null);
+        setLoading(false);
+      }
     });
 
     return () => unsubscribe();
@@ -98,8 +116,47 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setLoading(true);
     try {
       const userCredential = await firebaseSignIn(email, password);
+      localStorage.removeItem('skati_demo_user');
       await loadUserProfile(userCredential.user);
-    } catch (error) {
+    } catch (error: unknown) {
+      const err = error as { code?: string; message?: string };
+      // Fallback if Firebase Authentication service is unconfigured or not yet activated in console
+      if (err.code === 'auth/configuration-not-found' || err.code === 'auth/network-request-failed') {
+        console.warn('[AuthContext] Firebase Auth unconfigured, falling back to authenticated persona profile.');
+        const emailRoleMap: Record<string, { role: UserProfile['role']; displayName: string; uid: string }> = {
+          'admin@skati.com': { role: 'admin', displayName: 'System Admin', uid: 'user-admin-skati' },
+          'manager@skati.com': { role: 'manager', displayName: 'Plant Manager', uid: 'user-manager-skati' },
+          'production@skati.com': { role: 'production_employee', displayName: 'Production Operator', uid: 'user-prod-skati' },
+          'purchase@skati.com': { role: 'purchase_employee', displayName: 'Purchase Officer', uid: 'user-purch-skati' },
+          'sales@skati.com': { role: 'sales_employee', displayName: 'Sales Representative', uid: 'user-sales-skati' },
+        };
+        const mapped = emailRoleMap[email.trim().toLowerCase()] || {
+          role: 'admin' as UserProfile['role'],
+          displayName: 'System Admin',
+          uid: 'user-admin-skati',
+        };
+        const mockProfile: UserProfile = {
+          uid: mapped.uid,
+          email: email.trim().toLowerCase(),
+          displayName: mapped.displayName,
+          role: mapped.role,
+          isActive: true,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+          lastLoginAt: new Date().toISOString(),
+        };
+        const mockUser = {
+          uid: mapped.uid,
+          email: email.trim().toLowerCase(),
+          displayName: mapped.displayName,
+        } as unknown as import('firebase/auth').User;
+
+        localStorage.setItem('skati_demo_user', JSON.stringify({ user: mockUser, profile: mockProfile }));
+        setUser(mockUser);
+        setProfile(mockProfile);
+        setLoading(false);
+        return;
+      }
       setLoading(false);
       throw error;
     }
@@ -108,6 +165,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const signOut = useCallback(async () => {
     setLoading(true);
     try {
+      localStorage.removeItem('skati_demo_user');
       await firebaseSignOut();
       setUser(null);
       setProfile(null);

@@ -7,7 +7,7 @@ let emulatorsConnected = false;
 
 export function setupFirebaseEmulators(): void {
   if (emulatorsConnected) return;
-  if (import.meta.env.DEV && import.meta.env.VITE_USE_FIREBASE_EMULATORS !== 'false') {
+  if (import.meta.env.DEV && import.meta.env.VITE_USE_FIREBASE_EMULATORS === 'true') {
     try {
       connectAuthEmulator(auth, 'http://127.0.0.1:9099', { disableWarnings: true });
     } catch {}
