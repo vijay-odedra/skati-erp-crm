@@ -1,0 +1,11 @@
+{
+  "appId": "com.skati.shaktierp",
+  "appName": "Shakti ERP",
+  "webDir": "dist",
+  "android": {
+    "allowMixedContent": false
+  },
+  "server": {
+    "androidScheme": "https"
+  }
+}

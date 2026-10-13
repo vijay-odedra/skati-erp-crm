@@ -1,0 +1,39 @@
+{
+  "projectId": "skati-erp-crm-76657",
+  "authDomain": "skati-erp-crm-76657.firebaseapp.com",
+  "databaseId": "default",
+  "useEmulators": "false",
+  "accounts": [
+    {
+      "role": "admin",
+      "signInOk": false,
+      "signInMs": 898.0903000000001,
+      "error": "auth/configuration-not-found"
+    },
+    {
+      "role": "manager",
+      "signInOk": false,
+      "signInMs": 470.7333000000001,
+      "error": "auth/configuration-not-found"
+    },
+    {
+      "role": "production_employee",
+      "signInOk": false,
+      "signInMs": 973.1121,
+      "error": "auth/configuration-not-found"
+    },
+    {
+      "role": "purchase_employee",
+      "signInOk": false,
+      "signInMs": 709.6750000000002,
+      "error": "auth/configuration-not-found"
+    },
+    {
+      "role": "sales_employee",
+      "signInOk": false,
+      "signInMs": 537.3251999999998,
+      "error": "auth/configuration-not-found"
+    }
+  ],
+  "counts": {}
+}

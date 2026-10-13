@@ -57,10 +57,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           'purchase@skati.com': { role: 'purchase_employee', displayName: 'Purchase Officer' },
           'sales@skati.com': { role: 'sales_employee', displayName: 'Sales Representative' },
         };
-        const mapped = emailRoleMap[firebaseUser.email || ''] || {
-          role: 'admin',
-          displayName: firebaseUser.displayName || 'Admin User',
-        };
+        const mapped = emailRoleMap[firebaseUser.email || ''];
+        if (!mapped) {
+          // Unknown account without a Firestore profile: never grant a default role.
+          await firebaseSignOut();
+          setUser(null);
+          setProfile(null);
+          return;
+        }
         userProfile = {
           uid: firebaseUser.uid,
           email: firebaseUser.email || '',
@@ -130,11 +134,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           'purchase@skati.com': { role: 'purchase_employee', displayName: 'Purchase Officer', uid: 'user-purch-skati' },
           'sales@skati.com': { role: 'sales_employee', displayName: 'Sales Representative', uid: 'user-sales-skati' },
         };
-        const mapped = emailRoleMap[email.trim().toLowerCase()] || {
-          role: 'admin' as UserProfile['role'],
-          displayName: 'System Admin',
-          uid: 'user-admin-skati',
-        };
+        const mapped = emailRoleMap[email.trim().toLowerCase()];
+        if (!mapped) {
+          // Only the five standard role personas may use the fallback; anything else is rejected.
+          setLoading(false);
+          throw Object.assign(new Error('Invalid email or password.'), { code: 'auth/invalid-credential' });
+        }
         const mockProfile: UserProfile = {
           uid: mapped.uid,
           email: email.trim().toLowerCase(),

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useSyncExternalStore } from 'react';
 import { NavLink, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard,
@@ -13,6 +13,8 @@ import {
   ShieldCheck,
   LogOut,
   User as UserIcon,
+  Menu,
+  X,
   type LucideIcon,
 } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth.ts';
@@ -90,7 +92,18 @@ const NAV_ITEMS: NavItemConfig[] = [
   },
 ];
 
+// Phone-width screens (e.g. the Android app) get an off-canvas sidebar instead of a fixed column.
+const MOBILE_QUERY = '(max-width: 767px)';
+const subscribeMobile = (onChange: () => void) => {
+  const mql = window.matchMedia(MOBILE_QUERY);
+  mql.addEventListener('change', onChange);
+  return () => mql.removeEventListener('change', onChange);
+};
+const getIsMobile = () => window.matchMedia(MOBILE_QUERY).matches;
+
 export const AppLayout: React.FC = () => {
+  const isMobile = useSyncExternalStore(subscribeMobile, getIsMobile);
+  const [menuOpen, setMenuOpen] = useState(false);
   const { profile, signOut, hasPermission } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -112,9 +125,27 @@ export const AppLayout: React.FC = () => {
 
   return (
     <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#F4FAFC' }}>
+      {isMobile && menuOpen && (
+        <div
+          onClick={() => setMenuOpen(false)}
+          style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(15, 41, 66, 0.4)', zIndex: 999 }}
+        />
+      )}
       {/* Sidebar */}
       <aside
         style={{
+          ...(isMobile
+            ? {
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                bottom: 0,
+                zIndex: 1000,
+                maxWidth: '85vw',
+                transform: menuOpen ? 'translateX(0)' : 'translateX(-100%)',
+                transition: 'transform 0.2s ease',
+              }
+            : {}),
           width: '260px',
           backgroundColor: '#FFFFFF',
           borderRight: '1px solid #D9EAF0',
@@ -161,7 +192,7 @@ export const AppLayout: React.FC = () => {
         </div>
 
         {/* Navigation List */}
-        <nav style={{ flex: 1, padding: '16px 12px', overflowY: 'auto' }}>
+        <nav onClick={() => setMenuOpen(false)} style={{ flex: 1, padding: '16px 12px', overflowY: 'auto' }}>
           <div
             style={{
               fontSize: '11px',
@@ -298,21 +329,36 @@ export const AppLayout: React.FC = () => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            padding: '0 32px',
+            padding: isMobile ? '0 12px' : '0 32px',
+            gap: '8px',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ fontSize: '13px', color: '#64748B', fontWeight: 500 }}>
-              SKATI Manufacturing System
-            </span>
-            <span style={{ color: '#94A3B8' }}>/</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
+            {isMobile && (
+              <button
+                type="button"
+                aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+                onClick={() => setMenuOpen((open) => !open)}
+                style={{ background: 'none', border: 'none', padding: '6px', cursor: 'pointer', color: '#0F2942', display: 'flex' }}
+              >
+                {menuOpen ? <X size={22} /> : <Menu size={22} />}
+              </button>
+            )}
+            {!isMobile && (
+              <>
+                <span style={{ fontSize: '13px', color: '#64748B', fontWeight: 500 }}>
+                  SKATI Manufacturing System
+                </span>
+                <span style={{ color: '#94A3B8' }}>/</span>
+              </>
+            )}
             <span style={{ fontSize: '13px', color: '#087EA4', fontWeight: 600 }}>
               {permittedNavItems.find((item) => location.pathname.startsWith(item.path))?.label ||
                 'Workspace'}
             </span>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? '8px' : '16px', flexShrink: 0 }}>
             <NotificationCenter />
             <span
               style={{
@@ -330,7 +376,7 @@ export const AppLayout: React.FC = () => {
         </header>
 
         {/* Page Content */}
-        <main style={{ flex: 1, padding: '32px', overflowY: 'auto' }}>
+        <main style={{ flex: 1, padding: isMobile ? '16px 12px' : '32px', overflowY: 'auto', overflowX: 'auto' }}>
           <Outlet />
         </main>
       </div>

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Shakti ERP</string>
+    <string name="title_activity_main">Shakti ERP</string>
+    <string name="package_name">com.skati.shaktierp</string>
+    <string name="custom_url_scheme">com.skati.shaktierp</string>
+</resources>

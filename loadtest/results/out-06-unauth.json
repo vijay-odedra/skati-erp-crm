@@ -1,0 +1,127 @@
+{
+  "users": {
+    "status": 403,
+    "docs": 0,
+    "ms": 2050
+  },
+  "counters": {
+    "status": 403,
+    "docs": 0,
+    "ms": 421
+  },
+  "rawMaterials": {
+    "status": 403,
+    "docs": 0,
+    "ms": 1231
+  },
+  "stockTransactions": {
+    "status": 403,
+    "docs": 0,
+    "ms": 496
+  },
+  "products": {
+    "status": 403,
+    "docs": 0,
+    "ms": 1181
+  },
+  "bomItems": {
+    "status": 403,
+    "docs": 0,
+    "ms": 570
+  },
+  "productions": {
+    "status": 403,
+    "docs": 0,
+    "ms": 1198
+  },
+  "productionItems": {
+    "status": 403,
+    "docs": 0,
+    "ms": 535
+  },
+  "finishedProductStock": {
+    "status": 403,
+    "docs": 0,
+    "ms": 1177
+  },
+  "finishedProductTransactions": {
+    "status": 403,
+    "docs": 0,
+    "ms": 573
+  },
+  "suppliers": {
+    "status": 403,
+    "docs": 0,
+    "ms": 1142
+  },
+  "purchases": {
+    "status": 403,
+    "docs": 0,
+    "ms": 594
+  },
+  "purchaseItems": {
+    "status": 403,
+    "docs": 0,
+    "ms": 1132
+  },
+  "leads": {
+    "status": 403,
+    "docs": 0,
+    "ms": 561
+  },
+  "followUps": {
+    "status": 403,
+    "docs": 0,
+    "ms": 1111
+  },
+  "customers": {
+    "status": 403,
+    "docs": 0,
+    "ms": 593
+  },
+  "customerRequirements": {
+    "status": 403,
+    "docs": 0,
+    "ms": 1107
+  },
+  "quotations": {
+    "status": 403,
+    "docs": 0,
+    "ms": 643
+  },
+  "quotationItems": {
+    "status": 403,
+    "docs": 0,
+    "ms": 1059
+  },
+  "orders": {
+    "status": 403,
+    "docs": 0,
+    "ms": 629
+  },
+  "orderItems": {
+    "status": 403,
+    "docs": 0,
+    "ms": 1156
+  },
+  "productionOrderLinks": {
+    "status": 403,
+    "docs": 0,
+    "ms": 611
+  },
+  "dispatches": {
+    "status": 403,
+    "docs": 0,
+    "ms": 1036
+  },
+  "dispatchItems": {
+    "status": 403,
+    "docs": 0,
+    "ms": 648
+  },
+  "payments": {
+    "status": 403,
+    "docs": 0,
+    "ms": 1044
+  }
+}

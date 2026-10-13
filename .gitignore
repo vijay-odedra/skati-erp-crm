@@ -36,3 +36,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Android release signing (back up, never commit)
+android-signing/
+
+# Packaged release output
+release/

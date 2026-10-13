@@ -1,0 +1,713 @@
+{
+  "base": "http://localhost:5173",
+  "rounds": 2,
+  "login": {
+    "toDashboardRenderedMs": 1868.5999999940395,
+    "timedOut": false,
+    "url": "http://localhost:5173/dashboard"
+  },
+  "summary": {
+    "/dashboard": {
+      "fcp": {
+        "n": 2,
+        "avg": 214,
+        "p50": 172,
+        "p90": 256,
+        "p95": 256,
+        "p99": null,
+        "min": 172,
+        "max": 256
+      },
+      "dcl": {
+        "n": 2,
+        "avg": 131.15000002086163,
+        "p50": 125.7000000178814,
+        "p90": 136.60000002384186,
+        "p95": 136.60000002384186,
+        "p99": null,
+        "min": 125.7000000178814,
+        "max": 136.60000002384186
+      },
+      "rendered": {
+        "n": 2,
+        "avg": 893.7000000178814,
+        "p50": 851.8000000119209,
+        "p90": 935.6000000238419,
+        "p95": 935.6000000238419,
+        "p99": null,
+        "min": 851.8000000119209,
+        "max": 935.6000000238419
+      },
+      "timedOut": 0,
+      "finalPath": "/dashboard",
+      "recordCodesVisible": 3,
+      "accessDenied": false
+    },
+    "/raw-materials": {
+      "fcp": {
+        "n": 2,
+        "avg": 198,
+        "p50": 176,
+        "p90": 220,
+        "p95": 220,
+        "p99": null,
+        "min": 176,
+        "max": 220
+      },
+      "dcl": {
+        "n": 2,
+        "avg": 122.69999998807907,
+        "p50": 115.39999997615814,
+        "p90": 130,
+        "p95": 130,
+        "p99": null,
+        "min": 115.39999997615814,
+        "max": 130
+      },
+      "rendered": {
+        "n": 2,
+        "avg": 1031.7499999850988,
+        "p50": 879.8999999761581,
+        "p90": 1183.5999999940395,
+        "p95": 1183.5999999940395,
+        "p99": null,
+        "min": 879.8999999761581,
+        "max": 1183.5999999940395
+      },
+      "timedOut": 0,
+      "finalPath": "/raw-materials",
+      "recordCodesVisible": 5,
+      "accessDenied": false
+    },
+    "/products": {
+      "fcp": {
+        "n": 2,
+        "avg": 198,
+        "p50": 172,
+        "p90": 224,
+        "p95": 224,
+        "p99": null,
+        "min": 172,
+        "max": 224
+      },
+      "dcl": {
+        "n": 2,
+        "avg": 138,
+        "p50": 131.5,
+        "p90": 144.5,
+        "p95": 144.5,
+        "p99": null,
+        "min": 131.5,
+        "max": 144.5
+      },
+      "rendered": {
+        "n": 2,
+        "avg": 1755.050000011921,
+        "p50": 1618.7000000178814,
+        "p90": 1891.4000000059605,
+        "p95": 1891.4000000059605,
+        "p99": null,
+        "min": 1618.7000000178814,
+        "max": 1891.4000000059605
+      },
+      "timedOut": 0,
+      "finalPath": "/products",
+      "recordCodesVisible": 6,
+      "accessDenied": false
+    },
+    "/finished-products": {
+      "fcp": {
+        "n": 2,
+        "avg": 162,
+        "p50": 156,
+        "p90": 168,
+        "p95": 168,
+        "p99": null,
+        "min": 156,
+        "max": 168
+      },
+      "dcl": {
+        "n": 2,
+        "avg": 123.44999998807907,
+        "p50": 117.2999999821186,
+        "p90": 129.59999999403954,
+        "p95": 129.59999999403954,
+        "p99": null,
+        "min": 117.2999999821186,
+        "max": 129.59999999403954
+      },
+      "rendered": {
+        "n": 2,
+        "avg": 1563.1000000089407,
+        "p50": 1546,
+        "p90": 1580.2000000178814,
+        "p95": 1580.2000000178814,
+        "p99": null,
+        "min": 1546,
+        "max": 1580.2000000178814
+      },
+      "timedOut": 0,
+      "finalPath": "/finished-products",
+      "recordCodesVisible": 6,
+      "accessDenied": false
+    },
+    "/production": {
+      "fcp": {
+        "n": 2,
+        "avg": 178,
+        "p50": 168,
+        "p90": 188,
+        "p95": 188,
+        "p99": null,
+        "min": 168,
+        "max": 188
+      },
+      "dcl": {
+        "n": 2,
+        "avg": 133.54999999701977,
+        "p50": 130.59999999403954,
+        "p90": 136.5,
+        "p95": 136.5,
+        "p99": null,
+        "min": 130.59999999403954,
+        "max": 136.5
+      },
+      "rendered": {
+        "n": 2,
+        "avg": 1537.1500000059605,
+        "p50": 851.3000000119209,
+        "p90": 2223,
+        "p95": 2223,
+        "p99": null,
+        "min": 851.3000000119209,
+        "max": 2223
+      },
+      "timedOut": 0,
+      "finalPath": "/production",
+      "recordCodesVisible": 3,
+      "accessDenied": false
+    },
+    "/purchases": {
+      "fcp": {
+        "n": 2,
+        "avg": 162,
+        "p50": 160,
+        "p90": 164,
+        "p95": 164,
+        "p99": null,
+        "min": 160,
+        "max": 164
+      },
+      "dcl": {
+        "n": 2,
+        "avg": 120.9500000178814,
+        "p50": 114.7000000178814,
+        "p90": 127.2000000178814,
+        "p95": 127.2000000178814,
+        "p99": null,
+        "min": 114.7000000178814,
+        "max": 127.2000000178814
+      },
+      "rendered": {
+        "n": 2,
+        "avg": 876.4000000059605,
+        "p50": 862.3000000119209,
+        "p90": 890.5,
+        "p95": 890.5,
+        "p99": null,
+        "min": 862.3000000119209,
+        "max": 890.5
+      },
+      "timedOut": 0,
+      "finalPath": "/purchases",
+      "recordCodesVisible": 5,
+      "accessDenied": false
+    },
+    "/suppliers": {
+      "fcp": {
+        "n": 2,
+        "avg": 190,
+        "p50": 176,
+        "p90": 204,
+        "p95": 204,
+        "p99": null,
+        "min": 176,
+        "max": 204
+      },
+      "dcl": {
+        "n": 2,
+        "avg": 146.84999999403954,
+        "p50": 136.09999999403954,
+        "p90": 157.59999999403954,
+        "p95": 157.59999999403954,
+        "p99": null,
+        "min": 136.09999999403954,
+        "max": 157.59999999403954
+      },
+      "rendered": {
+        "n": 2,
+        "avg": 878.3999999910593,
+        "p50": 863.6999999880791,
+        "p90": 893.0999999940395,
+        "p95": 893.0999999940395,
+        "p99": null,
+        "min": 863.6999999880791,
+        "max": 893.0999999940395
+      },
+      "timedOut": 0,
+      "finalPath": "/suppliers",
+      "recordCodesVisible": 5,
+      "accessDenied": false
+    },
+    "/crm": {
+      "fcp": {
+        "n": 2,
+        "avg": 158,
+        "p50": 156,
+        "p90": 160,
+        "p95": 160,
+        "p99": null,
+        "min": 156,
+        "max": 160
+      },
+      "dcl": {
+        "n": 2,
+        "avg": 121.70000000298023,
+        "p50": 111.90000000596046,
+        "p90": 131.5,
+        "p95": 131.5,
+        "p99": null,
+        "min": 111.90000000596046,
+        "max": 131.5
+      },
+      "rendered": {
+        "n": 2,
+        "avg": 896.4000000059605,
+        "p50": 895.6000000238419,
+        "p90": 897.1999999880791,
+        "p95": 897.1999999880791,
+        "p99": null,
+        "min": 895.6000000238419,
+        "max": 897.1999999880791
+      },
+      "timedOut": 0,
+      "finalPath": "/crm",
+      "recordCodesVisible": 2,
+      "accessDenied": false
+    },
+    "/sales": {
+      "fcp": {
+        "n": 2,
+        "avg": 164,
+        "p50": 160,
+        "p90": 168,
+        "p95": 168,
+        "p99": null,
+        "min": 160,
+        "max": 168
+      },
+      "dcl": {
+        "n": 2,
+        "avg": 129.5,
+        "p50": 127,
+        "p90": 132,
+        "p95": 132,
+        "p99": null,
+        "min": 127,
+        "max": 132
+      },
+      "rendered": {
+        "n": 2,
+        "avg": 1618,
+        "p50": 859.9000000059605,
+        "p90": 2376.0999999940395,
+        "p95": 2376.0999999940395,
+        "p99": null,
+        "min": 859.9000000059605,
+        "max": 2376.0999999940395
+      },
+      "timedOut": 0,
+      "finalPath": "/sales",
+      "recordCodesVisible": 3,
+      "accessDenied": false
+    },
+    "/reports": {
+      "fcp": {
+        "n": 2,
+        "avg": 162,
+        "p50": 160,
+        "p90": 164,
+        "p95": 164,
+        "p99": null,
+        "min": 160,
+        "max": 164
+      },
+      "dcl": {
+        "n": 2,
+        "avg": 121.8999999910593,
+        "p50": 115,
+        "p90": 128.7999999821186,
+        "p95": 128.7999999821186,
+        "p99": null,
+        "min": 115,
+        "max": 128.7999999821186
+      },
+      "rendered": {
+        "n": 2,
+        "avg": 1156.0999999940395,
+        "p50": 873.5,
+        "p90": 1438.699999988079,
+        "p95": 1438.699999988079,
+        "p99": null,
+        "min": 873.5,
+        "max": 1438.699999988079
+      },
+      "timedOut": 0,
+      "finalPath": "/reports",
+      "recordCodesVisible": 3,
+      "accessDenied": false
+    },
+    "/users": {
+      "fcp": {
+        "n": 2,
+        "avg": 160,
+        "p50": 144,
+        "p90": 176,
+        "p95": 176,
+        "p99": null,
+        "min": 144,
+        "max": 176
+      },
+      "dcl": {
+        "n": 2,
+        "avg": 121.1499999910593,
+        "p50": 114.69999998807907,
+        "p90": 127.59999999403954,
+        "p95": 127.59999999403954,
+        "p99": null,
+        "min": 114.69999998807907,
+        "max": 127.59999999403954
+      },
+      "rendered": {
+        "n": 2,
+        "avg": 143.95000000298023,
+        "p50": 139,
+        "p90": 148.90000000596046,
+        "p95": 148.90000000596046,
+        "p99": null,
+        "min": 139,
+        "max": 148.90000000596046
+      },
+      "timedOut": 0,
+      "finalPath": "/users",
+      "recordCodesVisible": 0,
+      "accessDenied": false
+    },
+    "/settings": {
+      "fcp": {
+        "n": 2,
+        "avg": 164,
+        "p50": 152,
+        "p90": 176,
+        "p95": 176,
+        "p99": null,
+        "min": 152,
+        "max": 176
+      },
+      "dcl": {
+        "n": 2,
+        "avg": 130.4500000178814,
+        "p50": 123.10000002384186,
+        "p90": 137.80000001192093,
+        "p95": 137.80000001192093,
+        "p99": null,
+        "min": 123.10000002384186,
+        "max": 137.80000001192093
+      },
+      "rendered": {
+        "n": 2,
+        "avg": 157.7000000178814,
+        "p50": 149.10000002384186,
+        "p90": 166.30000001192093,
+        "p95": 166.30000001192093,
+        "p99": null,
+        "min": 149.10000002384186,
+        "max": 166.30000001192093
+      },
+      "timedOut": 0,
+      "finalPath": "/settings",
+      "recordCodesVisible": 0,
+      "accessDenied": false
+    }
+  },
+  "raw": {
+    "/dashboard": [
+      {
+        "fcp": 256,
+        "dcl": 136.60000002384186,
+        "path": "/dashboard",
+        "codes": 3,
+        "denied": false,
+        "textLen": 1668,
+        "rendered": 935.6000000238419,
+        "timedOut": false
+      },
+      {
+        "fcp": 172,
+        "dcl": 125.7000000178814,
+        "path": "/dashboard",
+        "codes": 3,
+        "denied": false,
+        "textLen": 1668,
+        "rendered": 851.8000000119209,
+        "timedOut": false
+      }
+    ],
+    "/raw-materials": [
+      {
+        "fcp": 220,
+        "dcl": 115.39999997615814,
+        "path": "/raw-materials",
+        "codes": 5,
+        "denied": false,
+        "textLen": 1429,
+        "rendered": 879.8999999761581,
+        "timedOut": false
+      },
+      {
+        "fcp": 176,
+        "dcl": 130,
+        "path": "/raw-materials",
+        "codes": 5,
+        "denied": false,
+        "textLen": 1429,
+        "rendered": 1183.5999999940395,
+        "timedOut": false
+      }
+    ],
+    "/products": [
+      {
+        "fcp": 224,
+        "dcl": 144.5,
+        "path": "/products",
+        "codes": 6,
+        "denied": false,
+        "textLen": 1057,
+        "rendered": 1618.7000000178814,
+        "timedOut": false
+      },
+      {
+        "fcp": 172,
+        "dcl": 131.5,
+        "path": "/products",
+        "codes": 6,
+        "denied": false,
+        "textLen": 1057,
+        "rendered": 1891.4000000059605,
+        "timedOut": false
+      }
+    ],
+    "/finished-products": [
+      {
+        "fcp": 168,
+        "dcl": 117.2999999821186,
+        "path": "/finished-products",
+        "codes": 6,
+        "denied": false,
+        "textLen": 1052,
+        "rendered": 1546,
+        "timedOut": false
+      },
+      {
+        "fcp": 156,
+        "dcl": 129.59999999403954,
+        "path": "/finished-products",
+        "codes": 6,
+        "denied": false,
+        "textLen": 1052,
+        "rendered": 1580.2000000178814,
+        "timedOut": false
+      }
+    ],
+    "/production": [
+      {
+        "fcp": 188,
+        "dcl": 136.5,
+        "path": "/production",
+        "codes": 3,
+        "denied": false,
+        "textLen": 776,
+        "rendered": 851.3000000119209,
+        "timedOut": false
+      },
+      {
+        "fcp": 168,
+        "dcl": 130.59999999403954,
+        "path": "/production",
+        "codes": 3,
+        "denied": false,
+        "textLen": 776,
+        "rendered": 2223,
+        "timedOut": false
+      }
+    ],
+    "/purchases": [
+      {
+        "fcp": 160,
+        "dcl": 114.7000000178814,
+        "path": "/purchases",
+        "codes": 5,
+        "denied": false,
+        "textLen": 799,
+        "rendered": 890.5,
+        "timedOut": false
+      },
+      {
+        "fcp": 164,
+        "dcl": 127.2000000178814,
+        "path": "/purchases",
+        "codes": 5,
+        "denied": false,
+        "textLen": 799,
+        "rendered": 862.3000000119209,
+        "timedOut": false
+      }
+    ],
+    "/suppliers": [
+      {
+        "fcp": 204,
+        "dcl": 157.59999999403954,
+        "path": "/suppliers",
+        "codes": 5,
+        "denied": false,
+        "textLen": 788,
+        "rendered": 893.0999999940395,
+        "timedOut": false
+      },
+      {
+        "fcp": 176,
+        "dcl": 136.09999999403954,
+        "path": "/suppliers",
+        "codes": 5,
+        "denied": false,
+        "textLen": 788,
+        "rendered": 863.6999999880791,
+        "timedOut": false
+      }
+    ],
+    "/crm": [
+      {
+        "fcp": 156,
+        "dcl": 111.90000000596046,
+        "path": "/crm",
+        "codes": 2,
+        "denied": false,
+        "textLen": 945,
+        "rendered": 895.6000000238419,
+        "timedOut": false
+      },
+      {
+        "fcp": 160,
+        "dcl": 131.5,
+        "path": "/crm",
+        "codes": 2,
+        "denied": false,
+        "textLen": 945,
+        "rendered": 897.1999999880791,
+        "timedOut": false
+      }
+    ],
+    "/sales": [
+      {
+        "fcp": 160,
+        "dcl": 127,
+        "path": "/sales",
+        "codes": 3,
+        "denied": false,
+        "textLen": 821,
+        "rendered": 2376.0999999940395,
+        "timedOut": false
+      },
+      {
+        "fcp": 168,
+        "dcl": 132,
+        "path": "/sales",
+        "codes": 3,
+        "denied": false,
+        "textLen": 821,
+        "rendered": 859.9000000059605,
+        "timedOut": false
+      }
+    ],
+    "/reports": [
+      {
+        "fcp": 160,
+        "dcl": 115,
+        "path": "/reports",
+        "codes": 3,
+        "denied": false,
+        "textLen": 801,
+        "rendered": 1438.699999988079,
+        "timedOut": false
+      },
+      {
+        "fcp": 164,
+        "dcl": 128.7999999821186,
+        "path": "/reports",
+        "codes": 3,
+        "denied": false,
+        "textLen": 801,
+        "rendered": 873.5,
+        "timedOut": false
+      }
+    ],
+    "/users": [
+      {
+        "fcp": 144,
+        "dcl": 114.69999998807907,
+        "path": "/users",
+        "codes": 0,
+        "denied": false,
+        "textLen": 598,
+        "rendered": 139,
+        "timedOut": false
+      },
+      {
+        "fcp": 176,
+        "dcl": 127.59999999403954,
+        "path": "/users",
+        "codes": 0,
+        "denied": false,
+        "textLen": 598,
+        "rendered": 148.90000000596046,
+        "timedOut": false
+      }
+    ],
+    "/settings": [
+      {
+        "fcp": 176,
+        "dcl": 137.80000001192093,
+        "path": "/settings",
+        "codes": 0,
+        "denied": false,
+        "textLen": 577,
+        "rendered": 166.30000001192093,
+        "timedOut": false
+      },
+      {
+        "fcp": 152,
+        "dcl": 123.10000002384186,
+        "path": "/settings",
+        "codes": 0,
+        "denied": false,
+        "textLen": 577,
+        "rendered": 149.10000002384186,
+        "timedOut": false
+      }
+    ]
+  },
+  "console": {
+    "error: Failed to load resource: the server responded with a status of 400 ()": 1,
+    "warning: [AuthContext] Firebase Auth unconfigured, falling back to authenticated persona profile.": 1
+  }
+}

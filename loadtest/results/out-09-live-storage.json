@@ -1,0 +1,903 @@
+{
+  "users": {
+    "count": 5,
+    "sampled": 5,
+    "fetchMs": 432.50250000000005,
+    "json": {
+      "avg": 244.6,
+      "min": 231,
+      "max": 256,
+      "sum": 1223
+    },
+    "firestore": {
+      "avg": 229.8,
+      "min": 216,
+      "max": 240,
+      "sum": 1149
+    },
+    "index": {
+      "avg": 1552.4,
+      "min": 1522,
+      "max": 1568,
+      "sum": 7762
+    },
+    "fields": {
+      "avg": 8,
+      "min": 8,
+      "max": 8,
+      "sum": 40
+    },
+    "idLen": {
+      "avg": 16.2,
+      "min": 15,
+      "max": 18,
+      "sum": 81
+    },
+    "loadTestDocs": 0
+  },
+  "counters": {
+    "count": 12,
+    "sampled": 12,
+    "fetchMs": 389.8802999999998,
+    "json": {
+      "avg": 19,
+      "min": 19,
+      "max": 19,
+      "sum": 228
+    },
+    "firestore": {
+      "avg": 89.08333333333333,
+      "min": 85,
+      "max": 92,
+      "sum": 1069
+    },
+    "index": {
+      "avg": 196.16666666666666,
+      "min": 188,
+      "max": 202,
+      "sum": 2354
+    },
+    "fields": {
+      "avg": 1,
+      "min": 1,
+      "max": 1,
+      "sum": 12
+    },
+    "idLen": {
+      "avg": 9.083333333333334,
+      "min": 5,
+      "max": 12,
+      "sum": 109
+    },
+    "loadTestDocs": 0
+  },
+  "rawMaterials": {
+    "count": 5,
+    "sampled": 5,
+    "fetchMs": 659.6316999999999,
+    "json": {
+      "avg": 371.2,
+      "min": 356,
+      "max": 381,
+      "sum": 1856
+    },
+    "firestore": {
+      "avg": 362.4,
+      "min": 348,
+      "max": 372,
+      "sum": 1812
+    },
+    "index": {
+      "avg": 2694.8,
+      "min": 2666,
+      "max": 2714,
+      "sum": 13474
+    },
+    "fields": {
+      "avg": 13,
+      "min": 13,
+      "max": 13,
+      "sum": 65
+    },
+    "idLen": {
+      "avg": 6,
+      "min": 6,
+      "max": 6,
+      "sum": 30
+    },
+    "loadTestDocs": 0
+  },
+  "stockTransactions": {
+    "count": 5,
+    "sampled": 5,
+    "fetchMs": 375.84410000000025,
+    "json": {
+      "avg": 310.2,
+      "min": 306,
+      "max": 316,
+      "sum": 1551
+    },
+    "firestore": {
+      "avg": 340,
+      "min": 336,
+      "max": 346,
+      "sum": 1700
+    },
+    "index": {
+      "avg": 2516,
+      "min": 2508,
+      "max": 2528,
+      "sum": 12580
+    },
+    "fields": {
+      "avg": 10,
+      "min": 10,
+      "max": 10,
+      "sum": 50
+    },
+    "idLen": {
+      "avg": 15,
+      "min": 15,
+      "max": 15,
+      "sum": 75
+    },
+    "loadTestDocs": 0
+  },
+  "products": {
+    "count": 3,
+    "sampled": 3,
+    "fetchMs": 377.90790000000015,
+    "json": {
+      "avg": 358.6666666666667,
+      "min": 356,
+      "max": 362,
+      "sum": 1076
+    },
+    "firestore": {
+      "avg": 343.6666666666667,
+      "min": 341,
+      "max": 347,
+      "sum": 1031
+    },
+    "index": {
+      "avg": 2205.3333333333335,
+      "min": 2200,
+      "max": 2212,
+      "sum": 6616
+    },
+    "fields": {
+      "avg": 11,
+      "min": 11,
+      "max": 11,
+      "sum": 33
+    },
+    "idLen": {
+      "avg": 8,
+      "min": 8,
+      "max": 8,
+      "sum": 24
+    },
+    "loadTestDocs": 0
+  },
+  "bomItems": {
+    "count": 5,
+    "sampled": 5,
+    "fetchMs": 376.91000000000076,
+    "json": {
+      "avg": 351.8,
+      "min": 348,
+      "max": 359,
+      "sum": 1759
+    },
+    "firestore": {
+      "avg": 339,
+      "min": 335,
+      "max": 345,
+      "sum": 1695
+    },
+    "index": {
+      "avg": 2324,
+      "min": 2316,
+      "max": 2336,
+      "sum": 11620
+    },
+    "fields": {
+      "avg": 12,
+      "min": 12,
+      "max": 12,
+      "sum": 60
+    },
+    "idLen": {
+      "avg": 7,
+      "min": 7,
+      "max": 7,
+      "sum": 35
+    },
+    "loadTestDocs": 0
+  },
+  "productions": {
+    "count": 1,
+    "sampled": 1,
+    "fetchMs": 390.9350999999997,
+    "json": {
+      "avg": 521,
+      "min": 521,
+      "max": 521,
+      "sum": 521
+    },
+    "firestore": {
+      "avg": 462,
+      "min": 462,
+      "max": 462,
+      "sum": 462
+    },
+    "index": {
+      "avg": 3318,
+      "min": 3318,
+      "max": 3318,
+      "sum": 3318
+    },
+    "fields": {
+      "avg": 16,
+      "min": 16,
+      "max": 16,
+      "sum": 16
+    },
+    "idLen": {
+      "avg": 6,
+      "min": 6,
+      "max": 6,
+      "sum": 6
+    },
+    "loadTestDocs": 0
+  },
+  "productionItems": {
+    "count": 1,
+    "sampled": 1,
+    "fetchMs": 389.84369999999944,
+    "json": {
+      "avg": 251,
+      "min": 251,
+      "max": 251,
+      "sum": 251
+    },
+    "firestore": {
+      "avg": 280,
+      "min": 280,
+      "max": 280,
+      "sum": 280
+    },
+    "index": {
+      "avg": 2000,
+      "min": 2000,
+      "max": 2000,
+      "sum": 2000
+    },
+    "fields": {
+      "avg": 9,
+      "min": 9,
+      "max": 9,
+      "sum": 9
+    },
+    "idLen": {
+      "avg": 7,
+      "min": 7,
+      "max": 7,
+      "sum": 7
+    },
+    "loadTestDocs": 0
+  },
+  "finishedProductStock": {
+    "count": 3,
+    "sampled": 3,
+    "fetchMs": 371.10259999999835,
+    "json": {
+      "avg": 191.33333333333334,
+      "min": 188,
+      "max": 196,
+      "sum": 574
+    },
+    "firestore": {
+      "avg": 234.33333333333334,
+      "min": 231,
+      "max": 239,
+      "sum": 703
+    },
+    "index": {
+      "avg": 1500.6666666666667,
+      "min": 1494,
+      "max": 1510,
+      "sum": 4502
+    },
+    "fields": {
+      "avg": 6,
+      "min": 6,
+      "max": 6,
+      "sum": 18
+    },
+    "idLen": {
+      "avg": 8,
+      "min": 8,
+      "max": 8,
+      "sum": 24
+    },
+    "loadTestDocs": 0
+  },
+  "finishedProductTransactions": {
+    "count": 1,
+    "sampled": 1,
+    "fetchMs": 383.01970000000074,
+    "json": {
+      "avg": 316,
+      "min": 316,
+      "max": 316,
+      "sum": 316
+    },
+    "firestore": {
+      "avg": 345,
+      "min": 345,
+      "max": 345,
+      "sum": 345
+    },
+    "index": {
+      "avg": 2986,
+      "min": 2986,
+      "max": 2986,
+      "sum": 2986
+    },
+    "fields": {
+      "avg": 11,
+      "min": 11,
+      "max": 11,
+      "sum": 11
+    },
+    "idLen": {
+      "avg": 7,
+      "min": 7,
+      "max": 7,
+      "sum": 7
+    },
+    "loadTestDocs": 0
+  },
+  "suppliers": {
+    "count": 2,
+    "sampled": 2,
+    "fetchMs": 378.2365000000009,
+    "json": {
+      "avg": 479.5,
+      "min": 470,
+      "max": 489,
+      "sum": 959
+    },
+    "firestore": {
+      "avg": 444.5,
+      "min": 435,
+      "max": 454,
+      "sum": 889
+    },
+    "index": {
+      "avg": 3189,
+      "min": 3170,
+      "max": 3208,
+      "sum": 6378
+    },
+    "fields": {
+      "avg": 16,
+      "min": 16,
+      "max": 16,
+      "sum": 32
+    },
+    "idLen": {
+      "avg": 7,
+      "min": 7,
+      "max": 7,
+      "sum": 14
+    },
+    "loadTestDocs": 0
+  },
+  "purchases": {
+    "count": 1,
+    "sampled": 1,
+    "fetchMs": 361.66660000000047,
+    "json": {
+      "avg": 513,
+      "min": 513,
+      "max": 513,
+      "sum": 513
+    },
+    "firestore": {
+      "avg": 480,
+      "min": 480,
+      "max": 480,
+      "sum": 480
+    },
+    "index": {
+      "avg": 3412,
+      "min": 3412,
+      "max": 3412,
+      "sum": 3412
+    },
+    "fields": {
+      "avg": 17,
+      "min": 17,
+      "max": 17,
+      "sum": 17
+    },
+    "idLen": {
+      "avg": 7,
+      "min": 7,
+      "max": 7,
+      "sum": 7
+    },
+    "loadTestDocs": 0
+  },
+  "purchaseItems": {
+    "count": 1,
+    "sampled": 1,
+    "fetchMs": 435.29069999999956,
+    "json": {
+      "avg": 340,
+      "min": 340,
+      "max": 340,
+      "sum": 340
+    },
+    "firestore": {
+      "avg": 367,
+      "min": 367,
+      "max": 367,
+      "sum": 367
+    },
+    "index": {
+      "avg": 2920,
+      "min": 2920,
+      "max": 2920,
+      "sum": 2920
+    },
+    "fields": {
+      "avg": 14,
+      "min": 14,
+      "max": 14,
+      "sum": 14
+    },
+    "idLen": {
+      "avg": 6,
+      "min": 6,
+      "max": 6,
+      "sum": 6
+    },
+    "loadTestDocs": 0
+  },
+  "leads": {
+    "count": 2,
+    "sampled": 2,
+    "fetchMs": 380.9938000000002,
+    "json": {
+      "avg": 518,
+      "min": 513,
+      "max": 523,
+      "sum": 1036
+    },
+    "firestore": {
+      "avg": 474,
+      "min": 469,
+      "max": 479,
+      "sum": 948
+    },
+    "index": {
+      "avg": 3306,
+      "min": 3296,
+      "max": 3316,
+      "sum": 6612
+    },
+    "fields": {
+      "avg": 18,
+      "min": 18,
+      "max": 18,
+      "sum": 36
+    },
+    "idLen": {
+      "avg": 8,
+      "min": 8,
+      "max": 8,
+      "sum": 16
+    },
+    "loadTestDocs": 0
+  },
+  "followUps": {
+    "count": 1,
+    "sampled": 1,
+    "fetchMs": 367.8209000000006,
+    "json": {
+      "avg": 419,
+      "min": 419,
+      "max": 419,
+      "sum": 419
+    },
+    "firestore": {
+      "avg": 384,
+      "min": 384,
+      "max": 384,
+      "sum": 384
+    },
+    "index": {
+      "avg": 2438,
+      "min": 2438,
+      "max": 2438,
+      "sum": 2438
+    },
+    "fields": {
+      "avg": 12,
+      "min": 12,
+      "max": 12,
+      "sum": 12
+    },
+    "idLen": {
+      "avg": 6,
+      "min": 6,
+      "max": 6,
+      "sum": 6
+    },
+    "loadTestDocs": 0
+  },
+  "customers": {
+    "count": 2,
+    "sampled": 2,
+    "fetchMs": 443.91359999999986,
+    "json": {
+      "avg": 544.5,
+      "min": 538,
+      "max": 551,
+      "sum": 1089
+    },
+    "firestore": {
+      "avg": 509.5,
+      "min": 503,
+      "max": 516,
+      "sum": 1019
+    },
+    "index": {
+      "avg": 3657,
+      "min": 3644,
+      "max": 3670,
+      "sum": 7314
+    },
+    "fields": {
+      "avg": 18,
+      "min": 18,
+      "max": 18,
+      "sum": 36
+    },
+    "idLen": {
+      "avg": 8,
+      "min": 8,
+      "max": 8,
+      "sum": 16
+    },
+    "loadTestDocs": 0
+  },
+  "customerRequirements": {
+    "count": 1,
+    "sampled": 1,
+    "fetchMs": 369.28299999999945,
+    "json": {
+      "avg": 455,
+      "min": 455,
+      "max": 455,
+      "sum": 455
+    },
+    "firestore": {
+      "avg": 449,
+      "min": 449,
+      "max": 449,
+      "sum": 449
+    },
+    "index": {
+      "avg": 3684,
+      "min": 3684,
+      "max": 3684,
+      "sum": 3684
+    },
+    "fields": {
+      "avg": 15,
+      "min": 15,
+      "max": 15,
+      "sum": 15
+    },
+    "idLen": {
+      "avg": 7,
+      "min": 7,
+      "max": 7,
+      "sum": 7
+    },
+    "loadTestDocs": 0
+  },
+  "quotations": {
+    "count": 1,
+    "sampled": 1,
+    "fetchMs": 383.34570000000167,
+    "json": {
+      "avg": 566,
+      "min": 566,
+      "max": 566,
+      "sum": 566
+    },
+    "firestore": {
+      "avg": 516,
+      "min": 516,
+      "max": 516,
+      "sum": 516
+    },
+    "index": {
+      "avg": 3706,
+      "min": 3706,
+      "max": 3706,
+      "sum": 3706
+    },
+    "fields": {
+      "avg": 18,
+      "min": 18,
+      "max": 18,
+      "sum": 18
+    },
+    "idLen": {
+      "avg": 7,
+      "min": 7,
+      "max": 7,
+      "sum": 7
+    },
+    "loadTestDocs": 0
+  },
+  "quotationItems": {
+    "count": 1,
+    "sampled": 1,
+    "fetchMs": 357.7589999999982,
+    "json": {
+      "avg": 363,
+      "min": 363,
+      "max": 363,
+      "sum": 363
+    },
+    "firestore": {
+      "avg": 391,
+      "min": 391,
+      "max": 391,
+      "sum": 391
+    },
+    "index": {
+      "avg": 3192,
+      "min": 3192,
+      "max": 3192,
+      "sum": 3192
+    },
+    "fields": {
+      "avg": 15,
+      "min": 15,
+      "max": 15,
+      "sum": 15
+    },
+    "idLen": {
+      "avg": 6,
+      "min": 6,
+      "max": 6,
+      "sum": 6
+    },
+    "loadTestDocs": 0
+  },
+  "orders": {
+    "count": 1,
+    "sampled": 1,
+    "fetchMs": 364.83190000000104,
+    "json": {
+      "avg": 579,
+      "min": 579,
+      "max": 579,
+      "sum": 579
+    },
+    "firestore": {
+      "avg": 535,
+      "min": 535,
+      "max": 535,
+      "sum": 535
+    },
+    "index": {
+      "avg": 3744,
+      "min": 3744,
+      "max": 3744,
+      "sum": 3744
+    },
+    "fields": {
+      "avg": 20,
+      "min": 20,
+      "max": 20,
+      "sum": 20
+    },
+    "idLen": {
+      "avg": 7,
+      "min": 7,
+      "max": 7,
+      "sum": 7
+    },
+    "loadTestDocs": 0
+  },
+  "orderItems": {
+    "count": 1,
+    "sampled": 1,
+    "fetchMs": 362.5113999999994,
+    "json": {
+      "avg": 382,
+      "min": 382,
+      "max": 382,
+      "sum": 382
+    },
+    "firestore": {
+      "avg": 410,
+      "min": 410,
+      "max": 410,
+      "sum": 410
+    },
+    "index": {
+      "avg": 3152,
+      "min": 3152,
+      "max": 3152,
+      "sum": 3152
+    },
+    "fields": {
+      "avg": 16,
+      "min": 16,
+      "max": 16,
+      "sum": 16
+    },
+    "idLen": {
+      "avg": 6,
+      "min": 6,
+      "max": 6,
+      "sum": 6
+    },
+    "loadTestDocs": 0
+  },
+  "productionOrderLinks": {
+    "count": 1,
+    "sampled": 1,
+    "fetchMs": 417.3441000000021,
+    "json": {
+      "avg": 206,
+      "min": 206,
+      "max": 206,
+      "sum": 206
+    },
+    "firestore": {
+      "avg": 240,
+      "min": 240,
+      "max": 240,
+      "sum": 240
+    },
+    "index": {
+      "avg": 1894,
+      "min": 1894,
+      "max": 1894,
+      "sum": 1894
+    },
+    "fields": {
+      "avg": 8,
+      "min": 8,
+      "max": 8,
+      "sum": 8
+    },
+    "idLen": {
+      "avg": 7,
+      "min": 7,
+      "max": 7,
+      "sum": 7
+    },
+    "loadTestDocs": 0
+  },
+  "dispatches": {
+    "count": 1,
+    "sampled": 1,
+    "fetchMs": 356.77939999999944,
+    "json": {
+      "avg": 486,
+      "min": 486,
+      "max": 486,
+      "sum": 486
+    },
+    "firestore": {
+      "avg": 442,
+      "min": 442,
+      "max": 442,
+      "sum": 442
+    },
+    "index": {
+      "avg": 3118,
+      "min": 3118,
+      "max": 3118,
+      "sum": 3118
+    },
+    "fields": {
+      "avg": 15,
+      "min": 15,
+      "max": 15,
+      "sum": 15
+    },
+    "idLen": {
+      "avg": 8,
+      "min": 8,
+      "max": 8,
+      "sum": 8
+    },
+    "loadTestDocs": 0
+  },
+  "dispatchItems": {
+    "count": 1,
+    "sampled": 1,
+    "fetchMs": 450.2402000000002,
+    "json": {
+      "avg": 280,
+      "min": 280,
+      "max": 280,
+      "sum": 280
+    },
+    "firestore": {
+      "avg": 301,
+      "min": 301,
+      "max": 301,
+      "sum": 301
+    },
+    "index": {
+      "avg": 2178,
+      "min": 2178,
+      "max": 2178,
+      "sum": 2178
+    },
+    "fields": {
+      "avg": 10,
+      "min": 10,
+      "max": 10,
+      "sum": 10
+    },
+    "idLen": {
+      "avg": 9,
+      "min": 9,
+      "max": 9,
+      "sum": 9
+    },
+    "loadTestDocs": 0
+  },
+  "payments": {
+    "count": 1,
+    "sampled": 1,
+    "fetchMs": 365.03589999999895,
+    "json": {
+      "avg": 448,
+      "min": 448,
+      "max": 448,
+      "sum": 448
+    },
+    "firestore": {
+      "avg": 426,
+      "min": 426,
+      "max": 426,
+      "sum": 426
+    },
+    "index": {
+      "avg": 2794,
+      "min": 2794,
+      "max": 2794,
+      "sum": 2794
+    },
+    "fields": {
+      "avg": 14,
+      "min": 14,
+      "max": 14,
+      "sum": 14
+    },
+    "idLen": {
+      "avg": 7,
+      "min": 7,
+      "max": 7,
+      "sum": 7
+    },
+    "loadTestDocs": 0
+  },
+  "_readsUsed": 84
+}
